@@ -1,6 +1,7 @@
 Description: 在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
 leetcode: null
+牛客网：https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&&tqId=11154&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
 
 思路： 从数组的右上角开始遍历 如果该点的值arr[row][col]大于target, 则满足相等条件的数组在该列的左侧 如果该点的值arr[row][col]小于target, 则满足相等条件的数组在该行的下方
 
@@ -12,7 +13,7 @@ public class Solution {
         }
         int rows = array.length;
         int cols = array[0].length;
-        
+        //array[0][cols-1]右上角
         for(int i = 0, j = cols-1; i < rows&&j >= 0;){
             if(array[i][j] == target){
                 return true;
