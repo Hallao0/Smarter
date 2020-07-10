@@ -1,0 +1,45 @@
+Description:
+
+请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+
+leetcode: https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/submissions/
+
+思路： 统计字符串中空格出现的次数 count 新建一个字符数组，其大小为 原长度 + 2 * count 从后往前复制原字符串到先的字符数组中 不是空格，则直接复制 是空格，则依次设值为 '0','2','%'
+
+solution:
+class Solution {
+    public String replaceSpace(String s) {
+        int count0 = 0;
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == ' '){
+                count0++;
+            }
+        }
+        int old_len = s.length();
+        int new_len = s.length() + count0*2;
+
+        //s.setLength(new_len);
+        char[] array = new char[new_len];
+        for(int i = old_len-1; i >= 0; i--){
+            if(s.charAt(i) != ' '){
+                //s.setCharAt(i + count0*2,s.charAt(i));
+                array[i + count0*2] = s.charAt(i);
+            }else{
+                //s.setCharAt(i + count0*2, '0');
+                //s.setCharAt(i + count0*2 -1, '2');
+                //s.setCharAt(i + count0*2 -2, '%');
+                 array[i + count0*2] = '0';
+                 array[i + count0*2-1] = '2';
+                 array[i + count0*2-2] = '%';
+                 count0--;
+            }
+        }
+        return new String(array, 0, new_len);
+    }
+}
+========================================
+复杂度分析：
+时间复杂度：O(n), 遍历字符串一遍，old_len
+空间复杂度: O(n), 需要创建array, new_len
+
+总结：因为没有count0--, debug了很久，注意变量的变化。
