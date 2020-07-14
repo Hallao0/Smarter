@@ -20,7 +20,58 @@ https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/
 思路： 1.先序遍历--根左右， 中序遍历--左根右 2.先序的第一个节点即为根节点，先序的左子树的第一个节点即为左子树的根节点，先序的右子树的第一个节点即为右子树的根节点 3.使用中序遍历的数组来划分左右子树及根节点 4.每一次确定一个根节点与它的左右节点，递归访问
 
 Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        TreeNode root =  helper(preorder,0,preorder.length-1,inorder,0,inorder.length-1);
+         
+        return root;
+    }
 
+    public TreeNode helper(int[] preorder, int pre_start,int pre_end, int[] inorder, int in_start, int in_end) {
+        // 递归结束条件，如果子树的长度<0则该子树为null
+        if (pre_start > pre_end || in_start > in_end) {
+            return null;
+        } 
+        TreeNode root = new TreeNode(preorder[pre_start]);
+        int index = getIndexFromInorder(inorder,in_start,in_end, preorder[pre_start]);
+        //left
+        int left_pre_start = pre_start+1;
+        //distance = index - in_start - 1
+        int left_pre_end = left_pre_start + index - in_start - 1;
+        int left_in_start = in_start;
+        int left_in_end = index - 1;
+
+        //right
+        int right_pre_start = left_pre_end+1;
+        int right_pre_end = pre_end;
+        int right_in_start = index+1;
+        int right_in_end = in_end;
+
+        root.left = helper(preorder,left_pre_start,left_pre_end,inorder,left_in_start,left_in_end);
+        root.right = helper(preorder,right_pre_start,right_pre_end,inorder,right_in_start,right_in_end);
+        return root;
+    }
+
+    public int getIndexFromInorder(int[] inorder,int start, int end, int num){
+        for(int i = start; i<=end; i++){
+            if(inorder[i] == num){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
 
 总结：
 自己第一次想的时候，只想到copy start index了， 没有想到end index
+注意递归的退出条件！
+注意start,end, 比如一开始写getIndexFromInorder，就直接遍历inorder的0 -> len-1, 应该是start, end !!!
