@@ -1,0 +1,58 @@
+Desciption:
+输入一个链表，从尾到头打印链表每个节点的值。
+
+leetcode: 
+https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/submissions/
+https://leetcode.com/problems/reverse-linked-list/submissions/
+
+思路： 
+1.链表只能从表头开始访问 可以使用栈把每次访问的节点的值压入到栈中 把栈中的节点的值依次弹出即是从尾到头的链表顺序 （实现较简单，所以solution是思路2的）
+2.反转列表，之后再依次遍历加入result array中
+
+====================================
+
+Solution:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //stack or reverse the list
+    public int[] reversePrint(ListNode head) {
+        if(head == null){
+            return new int[]{};
+        }
+
+        ListNode prev = null;
+        ListNode cur = head;
+        int len = 0;
+        while(cur != null){
+            ListNode next = cur.next;
+            cur.next = prev;
+
+            prev = cur;
+            cur = next;
+            len++;
+        }
+        int[] result = new int[len];
+        ListNode new_head = prev;
+        int i = 0;
+        while(new_head != null){
+            result[i++] = new_head.val;
+            new_head = new_head.next;
+        
+        }
+        return result;
+    }
+}
+
+时间复杂度：O(n),n = 链表长度
+空间复杂度：O(n), 链表反转部分是O(1), 只是需要返回result,额外分配空间了
+=======================================================
+总结：
+1. 好久不写就是会忘，5分钟想不出来就看答案吧
+2. 注意链表的head, cur, next,初始化以及while里面的跳出条件是cur != null or cur.next != null.
