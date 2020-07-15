@@ -1,0 +1,59 @@
+Description:
+
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+
+leetcode: 225, 232
+https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/submissions/
+
+思路： 
+1.队列--先进先出，栈--先进后出 
+2.stack1只负责进栈，stack2只负责出栈 
+3.delete queue head的时候要判断三种情况：
+both stack1 stack2 are empty.
+else{
+  stack2 not empty{
+  }
+  else{
+  }
+}
+
+Solution:
+class CQueue {
+    Stack<Integer> stack1;
+    Stack<Integer>  stack2;
+    public CQueue() {
+        stack1 = new Stack<Integer>();
+        stack2 = new Stack<Integer>();
+    }
+    
+    public void appendTail(int value) {
+        stack1.push(value);
+    }
+    
+    public int deleteHead() {
+        if(!stack2.isEmpty()){//stack2 != null
+            return stack2.pop();
+        }
+        if(stack1.isEmpty() && stack2.isEmpty()){
+            return -1;
+        }else{
+            while(!stack1.isEmpty()){
+                stack2.push(stack1.pop());
+            }
+            return stack2.pop();
+        }
+    }
+}
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * CQueue obj = new CQueue();
+ * obj.appendTail(value);
+ * int param_2 = obj.deleteHead();
+ */
+ =============================================
+ 时间复杂度：O(N)
+ 空间复杂度:O(N)
+ ============================
+ 总结：
+ 1.!stack2.isEmpty() stack2 != null  这俩不是等价的！new Stack<Integer>()之后就一直!=null
