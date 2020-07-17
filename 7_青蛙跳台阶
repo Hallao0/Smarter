@@ -1,0 +1,50 @@
+Description:
+
+一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+leetcode: https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/submissions/
+
+思路： dp[n] = dp[n-1] + dp[n-2]
+
+Solution:
+class Solution {
+    public int numWays(int n) {
+        // int[] dp = new int[n+1];
+
+        // //dp[n] = dp[n-1] + dp[n-2]
+        // if(n < 2){
+        //     return 1;
+        // }
+        // dp[0] = 1;
+        // dp[1] = 1;
+        // for(int i = 2; i <= n; i++){
+        //     dp[i] = dp[i-1]%1000000007 + dp[i-2]%1000000007;
+        // }
+        // return dp[n]%1000000007;
+        //v2
+        int[] dp = new int[3];
+        if(n < 2){
+            return 1;
+        }
+        dp[0] = 1;
+        dp[1] = 1;
+        for(int i = 2; i <= n; i++){
+            dp[2] = (dp[0] + dp[1])%1000000007;
+            dp[0] = dp[1]%1000000007;
+            dp[1] = dp[2]%1000000007; 
+            
+            
+        }
+        return dp[2];
+
+    }
+}
+========================================
+时间复杂度：O(N)
+空间复杂度：O(3)
+========================================
+总结：
+1. 注意line 32-34 的顺序
+2. 以下两行不等价！
+ dp[2] = (dp[0] + dp[1])%1000000007;
+ dp[2] = dp[0]%1000000007 + dp[1]%1000000007;
