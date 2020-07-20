@@ -1,0 +1,56 @@
+Description:
+
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+leetcode: 153, 154
+https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/
+
+思路： 最小元素存在的两种情况： 1.数组旋转了，则有A[min] < A[min - 1] 2.没有旋转，则A[0] 因此可以使用二分查找，核查middle元素，如果它小于前面的元素，则它就是最小的那个 如果比左右两侧元素的值都大，则最小元素在右侧，反之，若都小，则最小元素在左侧
+
+Solution:
+class Solution {
+    public int minArray(int[] numbers) {
+        int low = 0;
+        int high = numbers.length-1;
+        if(numbers.length == 0){
+            return -1;
+        }
+        if(numbers.length == 1){
+            return numbers[0];
+        }
+        if(numbers[low] < numbers[high]){
+            return numbers[low];
+        }
+        //3,1,3; 1,1; 3,3,3,1; 1,1,1,3
+        while(low < high && numbers[low] == numbers[low+1]){
+            low++;
+        }
+        if(numbers[low] == numbers[high] && low == high){
+            return numbers[low];
+        }
+        while(low <= high){
+            int mid = (low + high)/2;
+            if( numbers[mid+1] < numbers[mid]){
+                return numbers[mid+1];
+            }
+            if( numbers[mid] < numbers[mid-1]){
+                return numbers[mid];
+            }
+            if(numbers[mid] > numbers[high]){
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        return -1;
+    }
+}
+
+=============================
+时间复杂度 O(log_2 N) 在特例情况下（例如 [1, 1, 1, 1][1,1,1,1]），会退化到 O(N)。
+空间复杂度 O(1)
+
+总结：
+要看着简单例子写这道题
+然后再慢慢描细节，牛客网里自己写的答案是错的，少handle一种情况，line 25-30行是自己debug很久才想到的,自己真是太棒了
+
