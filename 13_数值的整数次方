@@ -1,0 +1,28 @@
+Description:
+
+给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+
+leetcode: 50
+https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/submissions/
+
+思路： 为了提高效率，需要使用递归，而不是循环 幂有正负之分，若是负数，则结果为整数的倒数 每次求幂次方的一半
+
+class Solution {
+    public double myPow(double x, int n) {
+        if(n < 0) return 1/helper(x,n);
+        return helper(x,n);
+    }
+    public double helper(double x, int n){
+        if(n == 0) return 1;
+        double half = helper(x, n/2);
+        if(n%2 == 0){
+            return half * half;
+        }else{
+            return x * half * half;
+        }
+    }
+}
+
+总结：
+一开始想到迭代和while的两种方法了，但是迭代想成result = helper(x, n-1) * result,一步一步的，没觉得比while好多少。
+再借鉴了一下答案，哦，原来是半步劈叉，且half=一下，比helper(x, n/2)*helper(x, n/2)效率要高。
