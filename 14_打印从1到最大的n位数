@@ -1,9 +1,51 @@
 Description:
+输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
 
-输入一个链表，反转链表后，输出链表的所有元素。
+示例 1:
 
-leetcode: 92, 206
+输入: n = 1
+输出: [1,2,3,4,5,6,7,8,9]
 
-思路： 递归方法: 递归终止条件，head == null 将参数1链表的头 给 参数2 链表的头 迭代方法: 保存head的下一结点 将head所指向的下一结点指向prev 将prev替换为head 将第一步保存的下一结点替换为head,用于下一次循环
+leetcode: https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/
+
+思路： 1.全排序。 2.书里increment func判断是否有overflow, 1——9， 9+1 = 10，10-99...
 
 Solution:
+class Solution {
+    private List<Integer> list;
+
+    public int[] printNumbers(int n) {
+        list = new ArrayList<>();
+        dfs(n, 0, new StringBuilder());
+        int[] res = new int[list.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+   //i位数的全排序
+    private void dfs(int n, int i, StringBuilder sb) {
+        if (i == n) {
+            while (sb.length() != 0 && sb.charAt(0) == '0') {//delete left 0 of 001,010...
+                sb.deleteCharAt(0);
+            }
+            if (sb.length() != 0) {
+                list.add(Integer.valueOf(sb.toString()));
+            }
+            return;
+        }
+        //0开头的0位，0开头的1位数，0开头的2两位数，1开头的，2开头的...9开头的；
+        for (int j = 0; j < 10; j++) {
+            sb.append(j);
+            dfs(n, i + 1, sb);
+            //测试用例输入1就知道了，类似回溯的回。之前append都把之前结果append了
+            if (sb.length() != 0) {
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+
+    
+}
+总结：
+全排序还得多背模版
