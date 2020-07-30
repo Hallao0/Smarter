@@ -60,7 +60,7 @@ class Solution {
         int m = s.length();
         int n = p.length();
         
-        // M[i][j] represents if the 1st i characters in s can match the 1st j characters in p
+        // M[i][j] represents if the 1st i characters in s can match the 1st j characters in p，中文：s的前i个 与 p的前j个是否匹配
         boolean[][] M = new boolean[m + 1][n + 1];
 
         // initialization: 
@@ -79,7 +79,7 @@ class Solution {
                 M[0][j] = true;
             }
         }
-	
+	//dp
 	for(int i = 1; i < m + 1; i++){
             for(int j = 1; j < n + 1; j++){
                 char curS = s.charAt(i - 1);
@@ -101,3 +101,4 @@ class Solution {
     }
 }
 
+总结：hard，连动归都没想到，动归+分类讨论
