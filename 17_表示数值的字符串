@@ -5,8 +5,44 @@ Description:
 leetcode: 65
 https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/
 
-思路： 一开始想的是按照规则添加各种if-else， 看了答案原来是有限状态自动机
+思路： 一开始想的是按照规则添加各种if-else， 看了答案原来是有限状态自动机:https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/solution/mian-shi-ti-20-biao-shi-shu-zhi-de-zi-fu-chuan-y-2/
 
 ![image](https://github.com/Hallao0/Smarter/blob/master/%E6%80%9D%E8%B7%AF%E5%9B%BE%E7%89%87/%E8%87%AA%E5%8A%A8%E7%8A%B6%E6%80%81%E6%9C%BA.png)
 
 Solution:
+
+class Solution {
+    //presume we already have designted state machine
+    public boolean isNumber(String s) {
+        Map[] states = {
+            //0
+            new HashMap<>() {{put(' ',0);put('s',1);put('d',2);put('.',4);}},
+            //1
+            new HashMap<>() {{put('d',2);put('.',4);}},
+            new HashMap<>() {{ put('d', 2); put('.', 3); put('e', 5); put(' ', 8); }}, // 2.
+            new HashMap<>() {{ put('d', 3); put('e', 5); put(' ', 8); }},              // 3.
+            new HashMap<>() {{ put('d', 3); }},                                        // 4.
+            new HashMap<>() {{ put('s', 6); put('d', 7); }},                           // 5.
+            new HashMap<>() {{ put('d', 7); }},                                        // 6.
+            new HashMap<>() {{ put('d', 7); put(' ', 8); }},                           // 7.
+            new HashMap<>() {{ put(' ', 8); }}       
+
+        };
+        int state = 0;
+        char operation;
+        for(char ch : s.toCharArray()){
+            //transfer operation from char
+            if(ch >= '0' && ch <= '9') operation = 'd';
+            else if(ch == '+' || ch == '-') operation = 's';
+            else if(ch == ' '|| ch == '.' || ch == 'E' || ch == 'e') operation = ch;
+            else operation = '?';
+
+            if(!states[state].containsKey(operation)) return false;
+            state = (int)states[state].get(operation);
+        }
+        return state == 2 || state == 3 || state == 7 || state == 8;
+     }
+}
+===========================
+总结
+我是
