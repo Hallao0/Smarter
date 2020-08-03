@@ -9,7 +9,7 @@ leetcode: https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-
 方法1.冒泡排序，插入排序，归并排序的相对位置不会变，是稳定的，两种解法的时间复杂度都是O(n^2) 方法2.统计奇数的个数，新建一个等长数组，奇数指针从0开始，偶数指针从奇数个数的后面开始，
 填数,时间复杂度O(n),空间复杂度O(n)
 
-Solution:
+Solution 1:
 class Solution {
     public int[] exchange(int[] nums) {
         int[] result = nums;
@@ -35,3 +35,34 @@ class Solution {
         result[i] = tmp;
     }
 }
+==============================
+时间复杂度： O(n2)
+
+Solution 2:
+class Solution {
+    public int[] exchange(int[] nums) {
+        int[] result = new int[nums.length];
+        //count the number of odds
+        int count = 0;
+        for(int num : nums){
+            if(num % 2 == 1){
+                count++;
+            }
+        }
+        int odd = 0;
+        int even = count;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i]%2 == 0){
+                result[even++] = nums[i];
+            }else{
+                result[odd++] = nums[i];
+            }
+        }
+        return result;
+    }
+}
+===========================================
+时间复杂度O（n）
+
+总结
+一开始写solution 1超时了，才退而用空间换时间。这题要问清是否是在原数组改动还是新建数组，是否要维持相对顺序。
