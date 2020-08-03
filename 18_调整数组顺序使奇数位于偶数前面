@@ -1,0 +1,37 @@
+Description:
+
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+leetcode: https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/
+
+思路： 相对位置不变
+
+方法1.冒泡排序，插入排序，归并排序的相对位置不会变，是稳定的，两种解法的时间复杂度都是O(n^2) 方法2.统计奇数的个数，新建一个等长数组，奇数指针从0开始，偶数指针从奇数个数的后面开始，
+填数,时间复杂度O(n),空间复杂度O(n)
+
+Solution:
+class Solution {
+    public int[] exchange(int[] nums) {
+        int[] result = nums;
+        for(int i = 0; i < nums.length; i++){
+            while(i < nums.length && result[i]%2 == 1 ) i++;
+            int j = i+1;
+            while(j < nums.length && result[j]%2 == 0) j++;
+            if(i < nums.length && j < nums.length && result[i]%2 == 0 && result[j]%2 == 1){
+                move(i,j,result);
+               
+            }
+        }
+        return result;
+    }
+    //move keep the relative order
+    public void move(int i, int j, int[] result){
+        int tmp = result[j];
+      
+        while(i < j){
+            result[j] = result[j-1];
+            j--;
+        }
+        result[i] = tmp;
+    }
+}
