@@ -1,0 +1,35 @@
+Description:
+
+输入一个链表，输出该链表中倒数第k个结点。
+
+leetcode: https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/
+
+思路： 使用快慢指针，快指针先跑k次，然后快慢指针同时跑，直到快指针指向了null 要防止k大于链表长度的情况，如果是则返回null
+
+Solution:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        ListNode fast = head;
+        ListNode slow = head;
+        for(int i = 1; i < k; i++){
+            fast = fast.next;
+        }
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+}
+
+
+总结：
+一次过简单题！
