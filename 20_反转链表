@@ -19,10 +19,10 @@ class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;
-        ListNode next = null;
+       // ListNode next = null;
 
         while(cur != null){
-            next = cur.next;
+            ListNode next = cur.next;
             cur.next = pre;
             
             pre = cur;
@@ -35,4 +35,4 @@ class Solution {
 }
 
 总结：
-line 25 不可以ListNode next = cur.next; 相当于循环
+虽然脑子里是null -> pre -> cur -> next, 但是初始化时候，不可以null.next = cur!, 而是通过line 26扭过来
