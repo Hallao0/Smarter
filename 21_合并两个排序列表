@@ -1,0 +1,44 @@
+Description:
+
+输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+
+leetcode: https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/submissions/
+
+思路： 迭代方法： 合并有序表，由于头节点不确定是哪一个，需使用dummy方法 当list1 且 list2 不为空时，比较两个list头结点的值的大小，小的链到list中 当其中一个链表为空时，将另一个链表放在list后面 返回 dummy.next 
+
+
+Solution:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null && l2 != null){
+            return l2;
+        }
+        if(l1 != null && l2 == null){
+            return l1;
+        }
+        if(l1 == null && l2 == null){
+            return null;
+        }
+        ListNode result = null;
+        if(l1.val < l2.val){
+            result = new ListNode(l1.val);
+            result.next = mergeTwoLists(l1.next, l2);
+        }else{
+            result = new ListNode(l2.val);
+            result.next = mergeTwoLists(l1, l2.next);
+        }
+        return result;
+
+    }
+}
+
+总结：
+一开始没考虑到l1, l2链表长度不一致的情况
