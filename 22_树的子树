@@ -1,0 +1,59 @@
+Description:
+
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构） 从某一节点之后，剩下的全部吻合
+
+leetcode: https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/submissions/
+
+思路： 此题是子树B只要局部包含在A内就判定为true leetcode 是子树B要和A剩下的所有都相同才能判定问true
+
+A树
+     3
+    / \
+   4   5
+  / \
+ 1   2
+    /
+   0
+B树
+   4
+  / \
+ 1   2
+剑指offer判定为true
+leetcode判定为false
+1.先判断根节点是否符合，然后在递归的判断，根节点的左右两个节点是否有符合的，这样就保证遍历了树中所有的节点 2.判定条件： 剑指offer：B=null返回true说明B的某分支没有节点了，但若B!=null,而A=null，则返回false，其次判断A,B根节点的值是否相等，递归左右节点 leetcode：AB同时为null返回true,不同时为null返回false,其次判断A,B根节点的值是否相等，递归左右节点
+
+solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        
+        if(A == null || B == null){
+            return false;
+        }
+        if(compare(A, B)) return true;
+     
+        return isSubStructure(A.left, B) || isSubStructure(A.right, B);
+    
+
+    }
+    public boolean compare(TreeNode A, TreeNode B){
+        if(B == null) return true;
+        if(A == null) return false;
+        if(A.val != B.val){
+            return false;
+        }else{
+            return compare(A.right, B.right) && compare(A.left, B.left);
+        }
+    }
+}
+
+总结：
+compare function写的还不错，就是isSubStructure写乱了，compare是用来递归比较，isSubStructures是用来游走到下次比较的子树。
