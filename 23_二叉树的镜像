@@ -1,0 +1,35 @@
+Description:
+
+操作给定的二叉树，将其变换为源二叉树的镜像。
+
+leetcode: https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/
+
+思路： 递归
+
+Solution:
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode mirrorTree(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+        TreeNode tmp = mirrorTree(root.left);//注意这里不是TreeNode tmp = root.left;否则答案有一边没有扭过来
+        root.left = mirrorTree(root.right);
+        root.right = tmp;
+
+        return root;
+
+    }
+}
+
+总结
+一步到位的小题
