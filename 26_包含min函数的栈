@@ -1,0 +1,62 @@
+Description:
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。
+
+leetcode: 155
+https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/submissions/
+
+思路： 需要使用两个栈，s1, s2 s2的栈顶始终保持最小的元素，若新push进来的值比s2的top小，则同时往s1,s2push该值，否则往s1push这个较大的值，并往s2push进s2当前的栈顶值 这种方式，保证了s1,s2中栈的元素个数是相同的 min()方法返回当前最小的值
+
+Solution:
+class MinStack {
+    Stack<Integer> min_s ;
+    Stack<Integer> n ;
+    /** initialize your data structure here. */
+    public MinStack() {
+       min_s = new Stack<Integer>();
+       n = new Stack<Integer>();
+    }
+    
+    public void push(int x) {
+        n.push(x);
+        if(min_s.isEmpty()){
+            min_s.push(x);
+        }else{
+            int min = min_s.peek();
+            if(x < min){
+                min_s.push(x);
+            }else{
+                min_s.push(min);
+            }
+        }
+        
+    }
+    
+    public void pop() {
+        if(!n.isEmpty()){
+            n.pop();
+        }
+        if(!min_s.isEmpty()){
+            min_s.pop();
+        }
+    }
+    
+    public int top() {
+        return n.peek();
+    }
+    
+    public int min() {
+        return min_s.peek();
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.min();
+ */
+ 
+ 总结
