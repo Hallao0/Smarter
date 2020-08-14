@@ -60,3 +60,4 @@ class MinStack {
  */
  
  总结
+ 九分完美，差一分是java stack没有自带的top函数, instead, should be "peek()"
