@@ -1,0 +1,49 @@
+Description:
+
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+leetcode: 120, 103, 107
+
+思路： 层序遍历使用队列 当队列不为空时，将队列尾的节点弹出，并将值添加到list中 然后将左右不为空的节点添加到队列中
+
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int[] levelOrder(TreeNode root) {
+        if(root == null){
+            return new int[0];
+        }
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        //Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        
+
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            //result[index++] = node.val;
+            list.add(node.val);
+
+            if(node.left!=null) queue.offer(node.left);
+            if(node.right!=null) queue.offer(node.right);
+        }
+        int[] result = new int[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+}
+
+总结：
+层序遍历 
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+offer,poll
