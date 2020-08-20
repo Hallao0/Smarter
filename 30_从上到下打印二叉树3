@@ -8,7 +8,7 @@ leetcode:
 https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
 https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/
 
-思路： 在上一题的
+思路： 在上一题的基础上，在mid_result.add增加一个逻辑判断reverse
 
 
 
