@@ -1,0 +1,47 @@
+Description:
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+leetcode: 94, 144, 145
+https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/
+
+思路： 1.二叉搜索树--左<根<右 2.后续遍历--左右根 3.找到左子树的区域，右子树的区域 4.递归的去判断这两半部分是否符合1,2这个规律，否则false 5.递归终止条件 start >= end, return true
+
+Solution 1 （bad）:
+class Solution {
+    public boolean verifyPostorder(int[] postorder) {
+        if(postorder == null){
+            return true;
+        }
+        int len = postorder.length;
+        if(len == 0){
+            return true;
+        }
+        int root = postorder[len - 1];
+        List<Integer> left = new ArrayList<>();
+        List<Integer> right = new ArrayList<>();
+
+        int index = 0;
+        while(index < len && postorder[index] < root){
+            left.add(postorder[index++]); 
+        }
+        while(index < len && postorder[index] > root){
+            right.add(postorder[index++]);
+        }
+        if(index < len - 1){
+            return false;
+        }
+        int[] leftpart = convert(left);
+        int[] rightpart = convert(right);
+
+        return verifyPostorder(leftpart) && verifyPostorder(rightpart);
+    }
+    public int[] convert(List<Integer> list){
+        int size = list.size();
+        int[] result = new int[size];
+        for(int i = 0; i < size; i ++){
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+}
