@@ -1,0 +1,42 @@
+Description:
+
+输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+
+leetcode: 112, 113
+
+思路： 1.所求是从根节点到叶节点的路径之和为某个值 2.结果有多个值，要使用回溯法（深度优先遍历） 3.递归终止条件--当该节点为null的时候，就无法继续进行下去了（左右节点都为null），return null 4.符合条件的：要保证满足target的同时，也是叶子节点,否则继续遍历左、右节点 5.回溯：list.remove(list.size() - 1);
+
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root == null) return res;
+        dfs(res, new ArrayList<>(), root, sum);
+        return res;
+    }
+
+    public void dfs(List<List<Integer>> res, List<Integer> mid,TreeNode root, int remain){
+        if(root == null){
+            return;
+        }
+        remain = remain - root.val;
+        mid.add(root.val);
+
+        if(root.left == null && root.right == null && remain == 0){
+            res.add(new ArrayList(mid));
+        }else{
+            dfs(res, mid, root.left, remain);
+            dfs(res, mid, root.right, remain);
+        }
+        mid.remove(mid.size() - 1);
+    }
+}
