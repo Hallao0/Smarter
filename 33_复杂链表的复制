@@ -1,0 +1,44 @@
+Description:
+
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+
+leetcode: 138
+https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof/submissions/
+
+思路： map<old_node, new_node>
+Solution:
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+class Solution {
+    public Node copyRandomList(Node head) {
+        Map<Node, Node> map = new HashMap<Node, Node>();
+        //init
+        Node bro = head;
+        while(bro != null){
+            map.put(bro, new Node(bro.val));
+            bro = bro.next;
+        }
+        //copy
+        Node sis = head;
+        while(sis != null){
+            map.get(sis).next = map.get(sis.next);
+            map.get(sis).random = map.get(sis.random);
+
+            sis = sis.next;
+        }
+
+        return map.get(head);
+    }
+}
