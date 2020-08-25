@@ -71,5 +71,5 @@ private boolean helper(int[] nums, int start, int end) {
 }
 ==============================================
 总结
-思路是对的，但是自己的实现确实效率低
+思路是对的，但是自己的实现确实效率低，能用start end index表示的，就不用new 新数组了
     
