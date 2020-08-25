@@ -45,3 +45,31 @@ class Solution {
         return result;
     }
 }
+
+Solution 2 (good)
+public boolean VerifySquenceOfBST(int [] nums) {
+    if (nums == null || nums.length == 0) return false;
+    
+    return helper(nums, 0, nums.length - 1);
+}
+
+private boolean helper(int[] nums, int start, int end) {
+    if (start >= end) return true;
+    
+    int root_val = nums[end];
+    int index = start;
+    while (nums[index] < root_val) {
+        index++;
+    }
+    for (int i = index; i < end; i++) {
+        if (nums[i] < root_val) {
+            return false;
+        }
+    }
+    
+    return helper(nums, start, index - 1) && helper(nums, index, end - 1);
+}
+==============================================
+总结
+思路是对的，但是自己的实现确实效率低
+    
