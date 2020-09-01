@@ -1,0 +1,60 @@
+Description:
+
+输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+leetcode: 46, 47, 60
+https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/submissions/
+
+思路： 回溯
+
+Solution:
+class Solution {
+    public String[] permutation(String str) {
+    ArrayList<String> res = new ArrayList<String>();
+    if (str == null || str.length() == 0) return null;
+         
+    char[] c = str.toCharArray();
+    ArrayList<Character> list = new ArrayList<Character>();
+    boolean[] used = new boolean[c.length];
+
+    Arrays.sort(c);  // 排序一下
+
+    dfs(c, used, list, res);
+    int len = res.size();
+    String[] result = new String[len];
+
+    for(int i = 0; i < len; i++){
+        result[i] = res.get(i);
+    }
+
+    return result;
+    }
+
+   private void dfs(char[] c, boolean[] used, ArrayList<Character> list, ArrayList<String> res) {
+    if (list.size() == c.length) {   // 满足条件，则将list转换成字符串，并添加到res中
+        StringBuilder temp = new StringBuilder();
+        for (char ch : list) {
+            temp.append(ch);
+        }
+        res.add(new String(temp));
+
+        return ;
+    }
+
+    for (int i = 0; i < c.length; i++) {
+        // 如果该元素已经被使用过，则继续遍历
+        if (used[i]) continue;
+        // 下一个重复值只有在前一个重复值没有被使用的情况下才可以使用
+        if (i > 0 && c[i - 1] == c[i] && !used[i - 1]) continue;
+
+        // if (list.contains(c[i])) continue;  // list中不能包含重复的字符
+
+        used[i] = true;
+        list.add(c[i]);
+        dfs(c, used, list, res);
+        used[i] = false;
+        list.remove(list.size() - 1);
+    }
+   }
+
+}
