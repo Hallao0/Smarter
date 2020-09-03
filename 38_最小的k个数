@@ -1,0 +1,54 @@
+Description:
+
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+
+leetcode: https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/submissions/
+
+思路： 1. 最大堆。2.快排变异（这个效率最高是O(N)）
+
+Solution:
+class Solution {
+    public int[] getLeastNumbers(int[] arr, int k) {
+        int[] result = new int[k];
+        if(arr==null || k<=0 || k>arr.length)
+            return result;
+        int start = 0;
+        int end = arr.length - 1;
+        int index = partition(arr, start, end);
+        while(index != k-1){
+            if(index < k - 1){
+                start = index + 1;
+                index = partition(arr, start, end);
+            }else{
+                end = index - 1;
+                index = partition(arr, start, end);
+            }
+        }
+        
+        for(int i = 0; i < k;i++){
+            result[i] = arr[i];
+        }
+        return result;
+    }
+
+    public int partition(int[] arr, int start, int end){
+        int value = arr[start];
+        while(start < end){
+            while(arr[end] >= value && start < end) end--;
+            swap(arr, start, end);
+
+            while(arr[start] <= value && start < end) start++;
+            swap(arr,start, end);
+        }
+        return start;
+    }
+
+    public void swap(int[] arr, int start, int end){
+        int tmp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = tmp;
+    }
+}
+======================================
+总结：
+1. 背熟partition, line 37|40 是>=,<=, 要不然0，0，1，2  k = 2的情况（有相同数字的情况）会出现死循环。
