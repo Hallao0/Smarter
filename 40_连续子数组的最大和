@@ -1,0 +1,21 @@
+Description:
+
+输入一个整型数组，数组里有正数也有负数。数组中一个或连续的多个整数组成一个子数组。求所有子数组的和的最大值。要求时间复杂度O(n)
+
+leetcode: 53
+https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/submissions/
+
+思路： 动态规划 状态转移方程如下： current=max(current+A[i],A[i]);//对于数组里的一个整数，它只有两种 选择：1、加入之前的 SubArray；2. 自己另起一个
+
+Solution:
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int current = 0;
+        int max = nums[0];
+        for(int i = 0; i < nums.length; i++){
+            current = Math.max(current + nums[i], nums[i]);
+            max = Math.max(max, current);
+        }
+        return max;
+    }
+}
