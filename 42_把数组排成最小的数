@@ -1,0 +1,48 @@
+Description: 
+输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+
+示例 1:
+
+输入: [10,2]
+输出: "102"
+示例 2:
+
+输入: [3,30,34,5,9]
+输出: "3033459"
+
+leetcode: https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/
+
+思路： 自定义排序条件，如果x + y > y + x, 则 y > x
+例如
+3 30 > 30 3
+则认为"30" < "3"
+
+Solution:
+class Solution {
+    public String minNumber(int[] nums) {
+        String[] strs = new String[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            strs[i] = String.valueOf(nums[i]);
+        }
+        //x+y > y+x, then y < x, then put x behind y
+        //x + y > y + x, (x+y).compareTo(y+x) > 0
+        // String test1 = "30";
+        // String test2 = "3";
+        // System.out.print(test1.compareTo(test2));
+         Arrays.sort(strs, (x,y) -> (x+y).compareTo(y+x));
+        //Arrays.sort(strs, (x,y) -> -1);// equals reverse
+
+        StringBuilder sb = new StringBuilder();
+        for(String str : strs){
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+}
+
+============================================
+总结：
+注意 lamda表达式的用法：
+ Arrays.sort(strs, (x,y) -> (x+y).compareTo(y+x));
+ 如果后面表达< 0, 则交换每一个位置，所以说
+ Arrays.sort(strs, (x,y) -> -1);// equals reverse
