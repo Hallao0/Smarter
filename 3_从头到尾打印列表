@@ -56,3 +56,4 @@ class Solution {
 总结：
 1. 好久不写就是会忘，5分钟想不出来就看答案吧
 2. 注意链表的head, cur, next,初始化以及while里面的跳出条件是cur != null or cur.next != null.
+3. 注意line 42 new_head = prev, 而不是cur, 反转后的头是从prev开始
