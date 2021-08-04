@@ -30,12 +30,14 @@ class Solution {
         }
         while(low <= high){
             int mid = (low + high)/2;
+            //[3,1],因此以下这坨要在前面先判断，否则第二拖numbers[mid-1]会oob
             if( numbers[mid+1] < numbers[mid]){
                 return numbers[mid+1];
             }
             if( numbers[mid] < numbers[mid-1]){
                 return numbers[mid];
             }
+            //跟numbers[high]比较
             if(numbers[mid] > numbers[high]){
                 low = mid+1;
             }else{
