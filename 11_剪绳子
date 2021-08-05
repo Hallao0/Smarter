@@ -58,3 +58,47 @@ class Solution {
 ========================================
 总结：
 注意此题length <=3 的时候，直接返回静态的正确答案，但是在dp初始化的时候，要对应初始化好，比如dp[6] = dp[3] * dp[3] = 3 * 3 =9
+=========================================================
+剪绳子2 from leetcode中文版剑指offer题库
+
+题目分析
+本题和14 - 1主体完全一样，不过扩大了n的范围，导致了大数越界情况的出现。
+
+解法1——动态规划
+解法说明
+尝试在动态规划的基础上取余，就算把数据类型都换成long也是无解的，对每次的dp[i]取余确实可以避免溢出的问题，但是由于过程中修改了值，会导致最终结果和预期不同。比如
+这一步：
+dp[i] = Math.max(dp[i] ，x * y );
+x * y = 1000000005 ，若dp[i] 本该等于 1000000008 ，但是经过上次取余后变成了1，本来的结果应该是1000000008 ，现在却变成了1000000005，所以在动态规划过程中是不能取余的，那么就只能使用BigInter存储中间结果了
+
+
+import java.math.BigInteger;
+
+class Solution {
+    public int cuttingRope(int length) {
+    if(length < 2) return 0;
+       if(length == 2) return 1;
+       if(length == 3) return 2;
+       //int[] dp = new int[length+1];
+       BigInteger[] dp = new BigInteger[length+1];
+       dp[0] = BigInteger.valueOf(0);
+       dp[1] = BigInteger.valueOf(1);
+       dp[2] = BigInteger.valueOf(2);
+       dp[3] = BigInteger.valueOf(3);
+       BigInteger max = BigInteger.valueOf(0);
+       BigInteger tmp = BigInteger.valueOf(0);
+       for(int i = 4; i <= length; i++){
+           max = BigInteger.valueOf(0);//!
+           for(int j = 1; j <= i/2; j++){//j = 1
+               //tmp = dp[j] * dp[i-j]; //dp[j] * dp[i-j] not dp[i] * dp[i-j]
+               tmp = dp[j].multiply(dp[i-j]);
+               if(tmp.compareTo(max) > 0){
+                    max = tmp;
+                }
+           }
+           
+           dp[i] = max;
+       }
+       return dp[length].mod(BigInteger.valueOf(1000000007)).intValue();
+    }
+}
