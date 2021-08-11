@@ -60,7 +60,7 @@ class Solution {
         int m = s.length();
         int n = p.length();
         
-        // M[i][j] represents if the 1st i characters in s can match the 1st j characters in p，中文：s的前i个 与 p的前j个是否匹配
+        // M[i][j] represents if the 1st i characters in s can match the 1st j characters in p，中文：s的前i个 与 p的前j个是否匹配，所以是m+1, n+1
         boolean[][] M = new boolean[m + 1][n + 1];
 
         // initialization: 
