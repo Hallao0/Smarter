@@ -57,3 +57,5 @@ class Solution {
 
 总结：
 compare function写的还不错，就是isSubStructure写乱了，compare是用来递归比较，isSubStructures是用来游走到下次比较的子树。
+=============================================================
+敲黑板：注意啦注意啦，line:48 和 line：49的顺序不能调换，否则这个例子会错：A = [1,2,3,4] ; B = [3]
