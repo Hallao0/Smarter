@@ -33,3 +33,29 @@ class Solution {
 
 总结
 一步到位的小题
+===========================================================================
+再一次写的时候，这样更易懂：
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode mirrorTree(TreeNode root) {
+        if(root == null) return null;
+
+        TreeNode next = new TreeNode(root.val);
+        if(root.right != null){
+            next.left = mirrorTree(root.right);
+        }
+        if(root.left != null){
+            next.right = mirrorTree(root.left);
+        }
+        return next;
+
+    }
+}
