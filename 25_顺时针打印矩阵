@@ -61,3 +61,47 @@ class Solution {
 if(up <= down)
 if(left <= right)
 不然会有数组越界问题
+==================================================================================
+再一次刷，这样写更干净一点：
+class Solution {
+    public int[] spiralOrder(int[][] matrix) {
+        if(matrix.length == 0) return new int[0];
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        int[] result = new int[rows*cols];
+        int up = 0;
+        int down = rows - 1;
+        int left = 0;
+        int right = cols - 1;
+
+        int index = 0;
+        while(up <= down && left <= right){
+            for(int i = left; i <= right; i++){
+                result[index++] = matrix[up][i];
+            }
+            up++;
+
+            if(up > down) break;
+            for(int i = up; i <= down; i++){
+                result[index++] = matrix[i][right];
+            }
+            right--;
+
+            if(left > right) break;
+            for(int i = right; i >= left; i--){
+                result[index++] = matrix[down][i];
+            }
+            down--;
+            
+            if(up > down) break;
+            for(int i = down; i >= up; i--){
+                result[index++] = matrix[i][left];
+            }
+            left++;
+        }
+        return result;
+    }
+}
+
+每次对
