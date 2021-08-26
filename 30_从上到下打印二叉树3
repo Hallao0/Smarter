@@ -65,3 +65,15 @@ class Solution {
 =====================================
 总结
 mid_result.add(0,node.val);
+============================================
+block 1:
+          if(reverse == true){
+                reverse = false;
+            }else{
+                reverse = true;
+            }
+block 2:
+          if(reverse == true) reverse = false;
+          if(reverse == false) reverse = true;
+
+这俩block的逻辑不是等价的！啊，block2的代码超蠢，因为line 1把reverse置成false了，所以会再进入line2的逻辑判断里，所以if-elseif逻辑要清晰
