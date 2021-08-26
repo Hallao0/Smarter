@@ -40,3 +40,6 @@ class Solution {
         mid.remove(mid.size() - 1);
     }
 }
+
+====================================================================
+如果想要在Line 35 添加完最后结果就return, 那么必须在return前添加回溯步骤：mid.remove(mid.size() - 1);
