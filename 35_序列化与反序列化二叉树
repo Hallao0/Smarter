@@ -108,3 +108,6 @@ public class Codec {
 // Your Codec object will be instantiated and called as such:
 // Codec codec = new Codec();
 // codec.deserialize(codec.serialize(root));
+===============================================================
+StringBuilder 的加:append; 减：deleteCharAt().
+Queue<TreeNode> queue = LinkedList<TreeNode>();
