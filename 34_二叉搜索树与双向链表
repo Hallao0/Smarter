@@ -66,3 +66,64 @@ class Solution {
 总结
 
 奇怪的是在leetcode.cn上总是报错空指针，牛客网是可以过的，一模一样的答案，唉，思路会就行
+=====================================================
+经过自己细心的观察，力客上面题目要求，最后头尾也要链接，所以加上line 97 & line 98就好了，A过，yeyeye
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val,Node _left,Node _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+*/
+class Solution {
+    public Node treeToDoublyList(Node root) {
+        if(root == null) return null;
+        Node[] result = helper(root);
+ //       System.out.println("head: "+ result[0].val);
+ //       System.out.println("tail: "+ result[1].val);
+        result[1].right = result[0];
+        result[0].left = result[1];
+        return result[0];
+        
+    }
+    //root.val = 2, return [node1, node3] head & tail
+    public Node[] helper(Node node){
+        Node head = node;
+        Node tail = node;
+  //      System.out.println(node.val);
+
+        if(node.left != null){
+            Node[] left_tree = helper(node.left);
+
+            node.left = left_tree[1];
+            left_tree[1].right = node;
+
+            head = left_tree[0];
+
+        }
+        if(node.right != null){
+            Node[] right_tree = helper(node.right);
+
+            node.right = right_tree[0];
+            right_tree[0].left = node;
+
+            tail = right_tree[1];
+
+        }
+        Node[] result = new Node[]{head, tail};
+        return result;
+    }
+}
