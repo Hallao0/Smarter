@@ -60,3 +60,41 @@ class Solution {
    }
 
 }
+========================================================================================================
+也可以直接用stringbuilder带着跑，然后一定要array.sort呀，别忘了
+class Solution {
+    public String[] permutation(String s) {
+        ArrayList<String> res = new ArrayList<String>();
+        char[] chars = s.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        boolean[] used = new boolean[chars.length];
+
+        Arrays.sort(chars); 
+        dfs(chars, sb, res, used);
+
+        String[] result = new String[res.size()];
+        for(int i = 0; i < res.size(); i++){
+            result[i] = res.get(i);
+        }
+        return result;
+    }
+    public void dfs(char[] chars, StringBuilder sb, ArrayList<String> res, boolean[] used ){
+        //String midresult = sb.toString();
+        if(sb.toString().length() == chars.length){
+            res.add(sb.toString());
+            return;
+        }
+        for(int i = 0; i < chars.length; i++){
+            if(used[i]) continue;
+            if(i > 0 && chars[i-1] == chars[i] && !used[i-1]) continue;
+
+            used[i] = true;
+            sb.append(chars[i]);
+            dfs(chars, sb, res, used);
+            used[i] = false;
+            sb.deleteCharAt(sb.length() - 1);
+
+        }
+
+    }
+}
