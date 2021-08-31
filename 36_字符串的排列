@@ -5,7 +5,8 @@ Description:
 leetcode: 46, 47, 60
 https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/submissions/
 
-思路： 回溯
+思路： 回溯，例：abc, 先找a开头的所有排列组合，再找b开头的所有排列组合，到b开头的时候，会把a设置为used = false. 因此，例abbc的时候，以b2为开头，会把b1设置为used = false,但是因为都是b，没必要
+重复，因此在line 50 有个!used[i-1]的判断
 
 Solution:
 class Solution {
@@ -45,7 +46,7 @@ class Solution {
         // 如果该元素已经被使用过，则继续遍历
         if (used[i]) continue;
         // 下一个重复值只有在前一个重复值没有被使用的情况下才可以使用
-        //例：abbc, 第一个b与第二个b是等价的：b1b2ac = b2b1ac, 因此有line 49的判断，否则会出现多个重复答案
+        //例：abbc, 第一个b与第二个b是等价的：b1b2ac = b2b1ac, 因此有line 50的判断，否则会出现多个重复答案
         if (i > 0 && c[i - 1] == c[i] && !used[i - 1]) continue;
 
         // if (list.contains(c[i])) continue;  // list中不能包含重复的字符
