@@ -45,6 +45,7 @@ class Solution {
         // 如果该元素已经被使用过，则继续遍历
         if (used[i]) continue;
         // 下一个重复值只有在前一个重复值没有被使用的情况下才可以使用
+        //例：abbc, 第一个b与第二个b是等价的：b1b2ac = b2b1ac, 因此有line 49的判断，否则会出现多个重复答案
         if (i > 0 && c[i - 1] == c[i] && !used[i - 1]) continue;
 
         // if (list.contains(c[i])) continue;  // list中不能包含重复的字符
