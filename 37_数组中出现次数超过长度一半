@@ -32,3 +32,26 @@ class Solution {
         return value;
     }
 }
+========================================================================================
+思路想清楚，怎么写它都是对的
+class Solution {
+    public int majorityElement(int[] nums) {
+        if(nums.length == 1) return nums[0];
+
+        int value = nums[0];
+        int count = 1;
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] == value){
+                count++;
+            }else{
+                count--;
+                if(count == 0){
+                    value = nums[i];
+                    count = 1;
+                }
+            }
+        }
+        return value;
+
+    }
+}
