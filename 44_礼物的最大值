@@ -44,4 +44,4 @@ class Solution {
     }
 }
 
-需要注意的是， dp的大小是 rows+1, cols+1, 否在在遍历dp[i+1][j], dp[i][j+1]的时候会越界
+需要注意的是， dp的大小是 rows+1, cols+1, 否则在遍历dp[i+1][j], dp[i][j+1]的时候会越界
