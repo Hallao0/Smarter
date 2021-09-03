@@ -48,3 +48,36 @@ class Solution {
         return dp[num_str.length()-1];
     }
 }
+
+solution2
+class Solution {
+    public int translateNum(int num) {
+        String num_str = String.valueOf(num);
+        //System.out.println(num_str.length());
+        if(num_str.length() == 1) return 1;
+
+        //int[] dp = new int[3];//temp
+        //dp[0] = 1;
+        int cur = 1;
+        int pre = 0;
+        int prepre = 0;
+        for(int i = 1; i < num_str.length(); i++){
+            //转移
+            prepre = pre;
+            pre = cur;
+            //start
+            cur = pre;
+            //if( i == 1) continue;
+            String combine = num_str.substring(i - 1, i + 1);
+            if(combine.compareTo("25") <= 0 && combine.compareTo("10") >= 0){
+                if( i == 1){
+                    cur += 1;                   
+                    continue;
+                }
+                cur += prepre;
+
+            }
+        }
+        return cur;
+    }
+}
